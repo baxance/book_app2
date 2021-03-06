@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/modules.css">
+  <title>Book App</title>
+</head>
+<body>
+  <header>
+    <h1>B O O K APP</h1>
+    <div><a href="/" title="home">Home</a></div>
+    <div><a href="/searches/new" title="search">Search</a></div>
+  </header>
+
+  <h2>Your Saved Books</h2>
+  <% output.forEach(data => { %>
+
+    <%-include('books/detail', {data: data}) %>
+
+    <form action="/books/<%= data.id %>" method="get">
+      <input type="hidden" type="text" name="title" value="<%= data.title %>">
+      <input type="hidden" type="text" name="author" value="<%= data.author %>">
+      <input type="hidden" type="text" name="image_url" value="<%= data.image %>">
+      <input type="hidden" type="text" name="book_desc" value="<%= data.description %>">
+      <input type="hidden" type="text" name="isbn" value="<%= data.isbn %>">
+      <input type="submit" type="text" value="View Details">
+    </form>
+  <% }) %> 
+
+</body>
+</html>

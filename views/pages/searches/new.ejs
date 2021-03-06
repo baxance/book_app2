@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <title>Book App</title>
+  </head>
+<body>
+  <header>
+    <h1>B O O K APP</h1>
+    <div><a href="/" title="home">Home</a></div>
+    <div><a href="/searches/new" title="search">Search</a></div>
+  </header>
+
+  <form action="/new" method="post">
+    <fieldset>
+      <legend>Search Books By Author or Title</legend>
+      <input type="text" name="inputText" placeholder="Enter Author or Title...">
+      <label> Author
+        <input type="radio" name="type" value="author">
+      </label>
+      <label> Title
+        <input type="radio" name="type" value="title" checked="checked">
+      </label>
+        <input type="submit">
+    </fieldset>
+  </form>
+</body>
+</html>
