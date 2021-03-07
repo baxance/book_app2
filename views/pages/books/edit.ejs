@@ -1,0 +1,16 @@
+<section>
+
+<form action="/books/<%= data.id %>?_method=PUT" method="post" class="hidden">
+  <input type="text" name="title" value="<%= data.title %>" />
+  <input type="text" name="author" value="<%= data.author %>" />
+  <input type="text" name="isbn" value="<%= data.isbn %>" />
+  <input type="text" name="image_url" value="<%= data.image_url %>" />
+  <input type="textarea" name="book_desc" value="<%= data.book_desc %>" />
+  <input type="submit" value="Update">
+</form>
+
+<form action="/books/<%= data.id %>?_method=DELETE" method="post">
+  <input type="submit" value="DELETE">
+</form>
+
+</section>

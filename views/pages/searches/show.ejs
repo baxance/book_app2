@@ -23,10 +23,10 @@
 
     <form action="/books" method="post">
       <input type="hidden" type="text" name="author" value="<%= data.author %>">
-      <input type="hidden" type="text" name="image_url" value="<%= data.image_url %>">
-      <input type="hidden" type="text" name="book_desc" value="<%= data.book_desc %>">
       <input type="hidden" type="text" name="title" value="<%= data.title %>">
       <input type="hidden" type="text" name="isbn" value="<%= data.isbn %>">
+      <input type="hidden" type="text" name="image_url" value="<%= data.image_url %>">
+      <input type="hidden" type="text" name="book_desc" value="<%= data.book_desc %>">
       <input type="submit" value="save">
     </form>
   <% }) %> 
