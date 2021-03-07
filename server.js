@@ -7,12 +7,14 @@ const superagent = require('superagent');
 const pg = require('pg');
 const app = express();
 require('dotenv').config();
+const methodOverride = require('method-override');
 
 const PORT = process.env.PORT;
 //middleware
 app.use(express.static('./views'));
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 
 // Set up the Database
@@ -25,6 +27,8 @@ app.get('/searches/new', searchForm);
 app.post('/new', searchBooks);
 app.get('/books/:id', bookDetail);
 app.post('/books', saveBook);
+app.put('/books/:id', updateBook);
+app.delete('/books/:id', deleteBook);
 
 // Create the callback functions
 function savedBooks(req, res) {
@@ -61,13 +65,9 @@ function searchBooks(req, res) {
 }
 
 function bookDetail(req, res) {
-  console.log('in the bookDetail function');
   const SQL = 'SELECT * FROM books WHERE id=$1;';
   const id = req.params.id;
   const safeValues = [id];
-  // console.log(values);
-  // console.log(SQL)
-  // console.log(req.body)
   return client.query(SQL, safeValues)
     .then(result => {
       const book = result.rows[0];
@@ -78,24 +78,30 @@ function bookDetail(req, res) {
 function saveBook(req, res) {
   const SQL = `INSERT INTO books (author, title, isbn, image_url, book_desc) VALUES ($1, $2, $3, $4, $5) RETURNING id;`;
   const values = [req.body.author, req.body.title, req.body.isbn, req.body.image_url, req.body.book_desc];
+  client.query(SQL, values)
+    .then(result => {
+      let id = result.rows[0].id;
+      res.redirect(`/books/${id}`);
+    }) .catch( (error) => { console.log(error)
+    })
+}
 
-  // return client.query(SQL, values)
-  //     .then( () => {
-  //       const SQL = 'SELECT * FROM books WHERE id=$1;';
-        // const values = [req.body];
-        console.log(values);
-        console.log(SQL)
-  
-        client.query(SQL, values)
-          .then(result => {
-            let id = result.rows[0].id;
-            console.log(result.rows[0], 'result')
-            res.redirect(`/books/${id}`);
-          }) .catch( (error) => {
-            console.log(error)
-          })
-          
-      // })
+function updateBook(req, res) {
+  console.log('in the update function')
+  const SQL = 'UPDATE books SET author=$1, title=$2, isbn=$3, image_url=$4, book_desc=$5 WHERE id=$6;';
+  const values = [req.body.author, req.body.title, req.body.isbn, req.body.image_url, req.body.book_desc, req.params.id];
+  client.query(SQL, values)
+    .then
+    let id = req.params.id;
+    (res.redirect(`/books/${id}`))
+}
+
+function deleteBook(req, res) {
+  console.log('in the delete function')
+  const SQL = 'DELETE FROM books WHERE id=$1;';
+  const value = [req.params.id];
+  client.query(SQL, value)
+    .then(res.redirect('/'))
 }
 
 // Constructor
